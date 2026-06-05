@@ -1,0 +1,3 @@
+runtime: nodejs
+run: node server.js
+startupTimeout: 30
