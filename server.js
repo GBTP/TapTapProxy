@@ -25,18 +25,15 @@ app.get("/", (_req, res) => {
 
 // 反向代理 —— 转发所有 /api 请求到源站
 app.use(
-  "/api",
   createProxyMiddleware({
     target: ORIGIN,
     changeOrigin: true,
-    // tus 分片上传需要流式转发，不能缓冲请求体
+    pathFilter: "/api",
     selfHandleResponse: false,
-    // 保持 chunked 传输
     proxyTimeout: 300_000,
     timeout: 300_000,
     on: {
       proxyReq: (proxyReq, req) => {
-        // 透传客户端真实 IP
         const clientIp =
           req.headers["x-forwarded-for"] || req.socket.remoteAddress;
         proxyReq.setHeader("X-Real-IP", clientIp);
