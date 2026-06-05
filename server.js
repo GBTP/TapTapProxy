@@ -20,7 +20,7 @@ const app = express();
 
 // 健康检查（云引擎要求 / 返回 2xx）
 app.get("/", (_req, res) => {
-  res.json({ status: "ok", proxy_target: ORIGIN });
+  res.json({ status: "ok" });
 });
 
 // 反向代理 —— 转发所有 /api 请求到源站
